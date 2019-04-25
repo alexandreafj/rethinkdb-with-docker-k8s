@@ -9,6 +9,10 @@ RUN apt-get update \
 	&& apt-get install -y rethinkdb=$RETHINKDB_PACKAGE_VERSION \
 	&& rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /data
+
+RUN chmod -R 777 /data
+
 VOLUME ["/data"]
 
 WORKDIR /data
