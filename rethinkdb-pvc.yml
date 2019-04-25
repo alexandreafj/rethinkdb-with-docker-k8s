@@ -1,0 +1,35 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: rethinkdb-pv
+  labels:
+    name: rethinkdb-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  gcePersistentDisk:
+    pdName: gcloud disk
+    fsType: ext4
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  labels:
+    name: rethinkdb-statefulset
+  name: rethinkdb-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: manual
+  selector:
+    matchLabels:
+      name: rethinkdb-pv

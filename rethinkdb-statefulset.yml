@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rethinkdb-statefulset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: rethinkdb-statefulset
+  serviceName: "service-rethinkdb"
+  template:
+    metadata:
+      labels:
+        name: rethinkdb-statefulset
+    spec:
+      containers:
+        - name: rethinkdb-container
+          image: docker image
+          env:
+            - name: RETHINKDB_INSTANCE_ROLE
+              value: "PROXY"
+          ports:
+            - containerPort: 8080
+              name: admin
+            - containerPort: 28015
+              name: driver
+            - containerPort: 29015
+              name: cluster

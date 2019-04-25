@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rethinkdb-replicationcontroller
+  labels:
+    name: service-rethinkdb-proxies
+spec:
+  replicas: 1
+  selector:
+    name: rethinkdb-replicationcontroller
+  template:
+    metadata:
+      labels:
+        name: rethinkdb-replicationcontroller
+    spec:
+      containers:
+        - name: rethinkdb-proxie-container
+          image: docker image
+          env:
+            - name: RETHINKDB_INSTANCE_ROLE
+              value: "PROXY"
+          ports:
+            - containerPort: 8080
+              name: admin
+            - containerPort: 28015
+              name: driver
+            - containerPort: 29015
+              name: cluster
+          volumeMounts:
+            - mountPath: /data
+              name: rethinkdb-pv
+      volumes:
+        - name: rethinkdb-pv
+          persistentVolumeClaim:
+            claimName: rethinkdb-pv
+          
+
+
