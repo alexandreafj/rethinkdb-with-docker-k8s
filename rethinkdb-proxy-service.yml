@@ -7,9 +7,16 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+  - name: admin
+    port: 80
     targetPort: 8080
     protocol: TCP
+  - name: driver
+    port: 28015
+    targetPort: 28015
+  - name: cluster
+    port: 29015
+    targetPort: 29015
   selector:
     name: rethinkdb-replicationcontroller
     
